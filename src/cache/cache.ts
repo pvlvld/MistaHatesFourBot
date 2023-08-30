@@ -64,8 +64,8 @@ export const adminChats = {
 
 // User stats
 export const userStats = {
-  get: (user_id: bigint, chat_id: bigint) => {
-    return Cache.get(getCacheKey.userStats(user_id, chat_id));
+  get: (user_id: bigint, chat_id: bigint): IntRange<0, 5> => {
+    return Cache.get(getCacheKey.userStats(user_id, chat_id)) || 0;
   },
 
   set: (user_id: bigint, chat_id: bigint, hits: IntRange<0, 5>) => {

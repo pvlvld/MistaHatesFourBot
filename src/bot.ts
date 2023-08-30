@@ -1,4 +1,4 @@
-import { Bot } from 'grammy';
+import { Bot, session } from 'grammy';
 import autoRetryTransformer from './transformers/auto-retry.transformer';
 import { MyContext } from './types';
 
@@ -8,3 +8,12 @@ const bot = new Bot<MyContext>(process.env.BOT_TOKEN);
 
 bot.use(autoRetryTransformer);
 
+// PLUGINS
+// Install the session plugin.
+bot.use(
+  session({
+    initial() {
+      return {};
+    },
+  })
+);

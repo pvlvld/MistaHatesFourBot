@@ -1,6 +1,6 @@
 import { Bot, session } from 'grammy';
 import autoRetryTransformer from './transformers/auto-retry.transformer';
-import { MyContext } from './types';
+import { MyContext } from './types/grammy.types';
 
 if (!process.env.BOT_TOKEN) throw new Error('Token required');
 

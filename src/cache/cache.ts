@@ -1,6 +1,7 @@
 import NodeCache from 'node-cache';
 import { ChatSettings } from '../types/grammy.types';
 import { AdminInputWithPerm } from '../types/prisma.types';
+import { IntRange } from '../types/utils.types';
 
 /**
  * chat_id: chat_title
@@ -64,11 +65,11 @@ export const adminChats = {
 // User stats
 export const userStats = {
   get: (user_id: bigint, chat_id: bigint) => {
-    return Cache.del(getCacheKey.userStats(user_id, chat_id));
+    return Cache.get(getCacheKey.userStats(user_id, chat_id));
   },
 
-  set: (user_id: bigint, chat_id: bigint) => {
-    return Cache.del(getCacheKey.userStats(user_id, chat_id));
+  set: (user_id: bigint, chat_id: bigint, hits: IntRange<0, 5>) => {
+    return Cache.set(getCacheKey.userStats(user_id, chat_id), hits);
   },
 
   del: (user_id: bigint, chat_id: bigint) => {

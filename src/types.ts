@@ -4,8 +4,9 @@ import {
   type Conversation,
   type ConversationFlavor,
 } from '@grammyjs/conversations';
+import DEFAULT_SETTINGS from './consts/defaultSettings';
 
-export type ChatSettings = {};
+export type ChatSettings = typeof DEFAULT_SETTINGS;
 
 type MyGroupChat = Chat.GroupChat & {
   settings: ChatSettings;

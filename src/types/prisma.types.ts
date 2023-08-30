@@ -14,5 +14,5 @@ export type AdminInputWithPerm = Admin & {
 export type SettingsInput = Settings;
 
 export type SettingsOnly = Omit<Settings, 'id' | 'chatId'> & {
-  vote_percent: IntRange<0, 100>;
+  vote_percent: IntRange<0, 101>;
 };

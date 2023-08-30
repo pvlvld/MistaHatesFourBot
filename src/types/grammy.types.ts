@@ -29,4 +29,9 @@ export type MyContext = Context &
     get chat(): MyChat | undefined;
   };
 
+export type MyGroupTextContext = ChatTypeContext<
+  Filter<MyContext, ':text'> | Filter<MyContext, ':caption'>,
+  'group' | 'supergroup'
+>;
+
 export type MyConversation = Conversation<MyContext>;

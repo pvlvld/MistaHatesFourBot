@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Chat {
+  id       BigInt        @id @unique
+  name     String
+  username String?
+  settings Settings?
+  admins   AdminToChat[]
+}
+
+model User {
+  id       BigInt  @id @unique
+  name     String
+  username String?
+  fours    Int     @default(0)
+}
+
+model Admin {
+  id       BigInt        @id @unique
+  name     String
+  username String?
+  chats    AdminToChat[]
+}
+
+model AdminToChat {
+  id           Int     @id @unique @default(autoincrement())
+  admin        Admin   @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  adminId      BigInt
+  chat         Chat    @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chatId       BigInt
+  status       String
+  has_del_perm Boolean
+}
+
+model Settings {
+  id           Int     @id @default(autoincrement())
+  chat         Chat    @relation(fields: [chatId], references: [id])
+  chatId       BigInt  @unique
+  vote_enable  Boolean
+  vote_percent Int
+}

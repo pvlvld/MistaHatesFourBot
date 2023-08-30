@@ -1,11 +1,16 @@
 import type { MyContext } from '../types/grammy.types';
-import type { Filter } from 'grammy';
+import { matchFilter, type Filter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
 
 const restricted_four = ['чотир', 'four', 'vier', 'quatr', 'четыр', '4'];
 
-function shootHandler(ctx: Filter<MyContext, ':text'>) {
-  const message = ctx.msg.text.toLowerCase();
+function shootHandler(
+  ctx: Filter<MyContext, ':text'> | Filter<MyContext, ':caption'>
+) {
+  let message = '';
+
+  if (matchFilter(':text')(ctx)) message = ctx.msg.text;
+  if (matchFilter(':caption')(ctx)) message = ctx.msg.caption;
 
   for (let restricted of restricted_four) {
     if (message.includes(restricted)) {

@@ -1,4 +1,4 @@
-import { Bot, session } from 'grammy';
+import { Bot, matchFilter, session } from 'grammy';
 import autoRetryTransformer from './transformers/auto-retry.transformer';
 import { MyContext } from './types/grammy.types';
 import shootHandler from './handlers/shoot.handler';
@@ -25,6 +25,9 @@ bot.use(
 );
 
 bot.use(i18n);
+// Drop channel_post updates
+bot.drop(matchFilter('channel_post'));
+
 
 // Handlers
 bot.on(':text', async (ctx) => shootHandler(ctx));

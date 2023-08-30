@@ -4,7 +4,7 @@ import getRandomInRange from '../utils/getRandomInRange';
 
 const restricted_four = ['чотир', 'four', 'vier', 'quatr', 'четыр', '4'];
 
-function textHandler(ctx: Filter<MyContext, ':text'>) {
+function shootHandler(ctx: Filter<MyContext, ':text'>) {
   const message = ctx.msg.text.toLowerCase();
 
   for (let restricted of restricted_four) {
@@ -20,13 +20,13 @@ function shoot(ctx: MyContext) {
 
   switch (isShootSuccess) {
     case true:
-      ctx.reply('shoot!');
+      ctx.reply(ctx.t('shoot-hit'));
       break;
 
     case false:
-      ctx.reply('missed!');
+      ctx.reply(ctx.t('shoot-miss'));
       break;
   }
 }
 
-export default textHandler;
+export default shootHandler;

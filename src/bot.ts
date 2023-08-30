@@ -1,7 +1,7 @@
 import { Bot, session } from 'grammy';
 import autoRetryTransformer from './transformers/auto-retry.transformer';
 import { MyContext } from './types/grammy.types';
-import textHandler from './handlers/text.handler';
+import shootHandler from './handlers/shoot.handler';
 import i18n from './utils/i18n';
 
 import * as dotenv from 'dotenv';
@@ -27,6 +27,6 @@ bot.use(
 bot.use(i18n);
 
 // Handlers
-bot.on(':text', async (ctx) => textHandler(ctx));
+bot.on(':text', async (ctx) => shootHandler(ctx));
 
 export default bot;

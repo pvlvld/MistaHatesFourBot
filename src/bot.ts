@@ -17,3 +17,5 @@ bot.use(
     },
   })
 );
+
+export default bot;

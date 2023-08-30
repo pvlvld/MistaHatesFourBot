@@ -38,7 +38,6 @@ model AdminToChat {
   adminId      BigInt
   chat         Chat    @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   chatId       BigInt
-  status       String
   has_del_perm Boolean
 }
 

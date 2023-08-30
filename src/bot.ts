@@ -4,6 +4,9 @@ import { MyContext } from './types/grammy.types';
 import textHandler from './handlers/text.handler';
 import i18n from './utils/i18n';
 
+import * as dotenv from 'dotenv';
+dotenv.config({ path: `./.env` });
+
 if (!process.env.BOT_TOKEN) throw new Error('Token required');
 
 const bot = new Bot<MyContext>(process.env.BOT_TOKEN);

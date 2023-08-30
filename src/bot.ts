@@ -8,7 +8,8 @@ if (!process.env.BOT_TOKEN) throw new Error('Token required');
 
 const bot = new Bot<MyContext>(process.env.BOT_TOKEN);
 
-bot.use(autoRetryTransformer);
+// TRANSFORMERS
+bot.api.config.use(autoRetryTransformer);
 
 // PLUGINS
 // Install the session plugin.

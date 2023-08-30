@@ -5,6 +5,7 @@ import {
   type ConversationFlavor,
 } from '@grammyjs/conversations';
 import DEFAULT_SETTINGS from '../consts/defaultSettings';
+import { I18nFlavor } from '@grammyjs/i18n';
 
 export type ChatSettings = typeof DEFAULT_SETTINGS;
 
@@ -23,6 +24,7 @@ export type MyChat =
   | MySupergroupChat;
 
 export type MyContext = Context &
+  I18nFlavor &
   ConversationFlavor & {
     get chat(): MyChat | undefined;
   };

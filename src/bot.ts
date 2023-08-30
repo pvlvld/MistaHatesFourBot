@@ -28,8 +28,15 @@ bot.use(i18n);
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));
 
-
 // Handlers
-bot.on(':text', async (ctx) => shootHandler(ctx));
+bot.on('message', async (ctx) => {
+  if (matchFilter(':text')(ctx)) {
+    shootHandler(ctx);
+  }
+
+  if (matchFilter(':caption')(ctx) && ctx.msg.caption.length <= 10) {
+    shootHandler(ctx);
+  }
+});
 
 export default bot;

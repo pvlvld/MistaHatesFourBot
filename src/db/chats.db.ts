@@ -116,6 +116,16 @@ export async function getChatSettings(chat_id: bigint) {
   )?.settings;
 }
 
+export async function updateChatSettings(
+  chat_id: bigint,
+  settings: ChatSettings
+) {
+  return await prisma.settings.update({
+    where: { chatId: chat_id },
+    data: settings,
+  });
+}
+
 export const remove = async (id: bigint) => {
   await prisma.chat.delete({ where: { id } }).catch((e: any) => {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

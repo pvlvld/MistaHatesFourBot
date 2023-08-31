@@ -1,10 +1,10 @@
-import { Prisma } from '@prisma/client';
+import { Chat, Prisma } from '@prisma/client';
 import prisma from './prismaClient.db';
 import { AdminInputWithPerm } from '../types/prisma.types';
 import { ChatSettings } from '../types/grammy.types';
 
 export const upsertChatWithAdmins = async (
-  chat: Omit<Prisma.ChatCreateInput, 'admins | settings'>,
+  chat: Chat,
   settings: ChatSettings,
   admins: AdminInputWithPerm[]
 ) => {
@@ -16,7 +16,7 @@ export const upsertChatWithAdmins = async (
 };
 
 export const create = async (
-  chat: Omit<Prisma.ChatCreateInput, 'admins | settings'>,
+  chat: Chat,
   settings: ChatSettings,
   admins: AdminInputWithPerm[]
 ) => {
@@ -51,7 +51,7 @@ export const create = async (
 };
 
 export const update = async (
-  chat: Omit<Prisma.ChatCreateInput, 'admins | settings'>,
+  chat: Chat,
   settings: ChatSettings,
   admins: AdminInputWithPerm[]
 ) => {

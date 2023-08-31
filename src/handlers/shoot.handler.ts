@@ -3,7 +3,9 @@ import { matchFilter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
 import { userStats } from '../cache/cache';
 
-const restricted_four = ['чотир', 'four', 'vier', 'quatr', 'четыр', '4'];
+if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
+
+const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
 
 function shootHandler(ctx: MyGroupTextContext) {
   let message = '';

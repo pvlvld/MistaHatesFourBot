@@ -1,12 +1,10 @@
-import type { MyContext } from '../types/grammy.types';
-import { matchFilter, type Filter } from 'grammy';
+import type { MyGroupTextContext } from '../types/grammy.types';
+import { matchFilter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
 
 const restricted_four = ['чотир', 'four', 'vier', 'quatr', 'четыр', '4'];
 
-function shootHandler(
-  ctx: Filter<MyContext, ':text'> | Filter<MyContext, ':caption'>
-) {
+function shootHandler(ctx: MyGroupTextContext) {
   let message = '';
 
   if (matchFilter(':text')(ctx)) message = ctx.msg.text;
@@ -20,7 +18,7 @@ function shootHandler(
   }
 }
 
-function shoot(ctx: MyContext) {
+function shoot(ctx: MyGroupTextContext) {
   const isShootSuccess = Boolean(getRandomInRange(0, 1));
 
   switch (isShootSuccess) {

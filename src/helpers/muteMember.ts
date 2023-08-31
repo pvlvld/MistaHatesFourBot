@@ -1,5 +1,5 @@
 import isFromAdmin from './isFromAdmin';
-import { MyContext } from '../types/grammy.types';
+import { MyGroupTextContext } from '../types/grammy.types';
 
 // in seconds
 if (!process.env.MUTE_TIME) throw new Error('Restricted four required');
@@ -22,8 +22,8 @@ const mute_permissions = {
   can_pin_messages: false,
 };
 
-async function muteMember(ctx: MyContext) {
-  if (await isFromAdmin()) return false;
+async function muteMember(ctx: MyGroupTextContext) {
+  if (await isFromAdmin(ctx)) return false;
 
   return ctx
     .restrictAuthor(mute_permissions, { until_date: getUntilDate() })

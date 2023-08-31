@@ -5,7 +5,7 @@ const i18n = new I18n<MyContext>({
   // Remove if user more than one language
   localeNegotiator: (ctx) => 'uk',
   defaultLocale: 'uk',
-  directory: 'locales',
+  directory: './src/locales',
 });
 
 export default i18n;

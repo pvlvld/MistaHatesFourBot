@@ -17,7 +17,7 @@ const Cache = new NodeCache({
 });
 
 // Chat admins
-const admins = {
+export const admins = {
   set: (chat_id: bigint, admins: Set<AdminInputWithPerm>) => {
     if (!admins.size) return false;
     return Cache.set(getCacheKey.admins(chat_id), admins, 0);

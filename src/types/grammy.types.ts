@@ -1,4 +1,4 @@
-import type { Context } from 'grammy';
+import type { ChatTypeContext, Context, Filter } from 'grammy';
 import type { Chat } from '@grammyjs/types';
 import {
   type Conversation,

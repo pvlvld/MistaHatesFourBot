@@ -1,6 +1,7 @@
 import type { MyGroupTextContext } from '../types/grammy.types';
 import { matchFilter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
+import { userStats } from '../cache/cache';
 
 const restricted_four = ['чотир', 'four', 'vier', 'quatr', 'четыр', '4'];
 
@@ -20,14 +21,25 @@ function shootHandler(ctx: MyGroupTextContext) {
 
 function shoot(ctx: MyGroupTextContext) {
   const isShootSuccess = Boolean(getRandomInRange(0, 1));
+  const shoots_left = userStats.get(BigInt(ctx.from.id), BigInt(ctx.chat.id));
 
   switch (isShootSuccess) {
     case true:
-      ctx.reply(ctx.t('shoot-hit'));
+      ctx.replyWithPhoto(
+        'AgACAgIAAxkBAAMxZO-OyvxB7f1LkexOugPj4UAxJ6kAAuHLMRtYwoBLOkEdf-uUbk0BAAMCAAN4AAMwBA',
+        {
+          caption: ctx.t('shoot-hit', {
+            'shoots-left': shoots_left,
+          }),
+        }
+      );
       break;
 
     case false:
-      ctx.reply(ctx.t('shoot-miss'));
+      ctx.replyWithPhoto(
+        'AgACAgIAAxkBAAMxZO-OyvxB7f1LkexOugPj4UAxJ6kAAuHLMRtYwoBLOkEdf-uUbk0BAAMCAAN4AAMwBA',
+        { caption: ctx.t('shoot-miss', { 'shoots-left': shoots_left }) }
+      );
       break;
   }
 }

@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { AdminToChat, Prisma } from '@prisma/client';
 import prisma from './prismaClient.db';
 import { AdminInputWithPerm, SettingsOnly } from '../types/prisma.types';
 
@@ -92,13 +92,23 @@ export const get = async (id: bigint) => {
   });
 };
 
-export const getChatAdmins = async (id: bigint) => {
-  return await prisma.chat
-    .findUnique({ where: { id }, select: { admins: true } })
-    .catch((e: any) => {
-      console.error(e);
-      return null;
-    });
+export const getChatAdmins = async (id: bigint): Promise<AdminToChat[]> => {
+  let admins = (
+    await prisma.chat
+      .findUnique({
+        where: { id },
+        select: { admins: true },
+      })
+      .catch((e: any) => {
+        console.error(e);
+      })
+  )?.admins;
+
+  if (!admins) {
+    admins = [] as AdminToChat[];
+  }
+
+  return admins;
 };
 
 export const remove = async (id: bigint) => {

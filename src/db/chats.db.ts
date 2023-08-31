@@ -1,10 +1,11 @@
 import { Prisma } from '@prisma/client';
 import prisma from './prismaClient.db';
-import { AdminInputWithPerm, SettingsOnly } from '../types/prisma.types';
+import { AdminInputWithPerm } from '../types/prisma.types';
+import { ChatSettings } from '../types/grammy.types';
 
 export const upsertChatWithAdmins = async (
   chat: Omit<Prisma.ChatCreateInput, 'admins | settings'>,
-  settings: SettingsOnly,
+  settings: ChatSettings,
   admins: AdminInputWithPerm[]
 ) => {
   if (await get(BigInt(chat.id))) {
@@ -16,7 +17,7 @@ export const upsertChatWithAdmins = async (
 
 export const create = async (
   chat: Omit<Prisma.ChatCreateInput, 'admins | settings'>,
-  settings: SettingsOnly,
+  settings: ChatSettings,
   admins: AdminInputWithPerm[]
 ) => {
   return await prisma.chat
@@ -51,7 +52,7 @@ export const create = async (
 
 export const update = async (
   chat: Omit<Prisma.ChatCreateInput, 'admins | settings'>,
-  settings: SettingsOnly,
+  settings: ChatSettings,
   admins: AdminInputWithPerm[]
 ) => {
   return await prisma.chat

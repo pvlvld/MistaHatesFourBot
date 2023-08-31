@@ -106,6 +106,15 @@ export async function getChatAdmins(chat_id: bigint) {
   }));
 }
 
+export async function getChatSettings(chat_id: bigint) {
+  return (
+    await prisma.chat.findUnique({
+      where: { id: chat_id },
+      select: { settings: true },
+    })
+  )?.settings;
+}
+
 export const remove = async (id: bigint) => {
   await prisma.chat.delete({ where: { id } }).catch((e: any) => {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

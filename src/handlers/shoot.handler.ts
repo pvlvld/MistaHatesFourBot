@@ -2,6 +2,7 @@ import type { MyGroupTextContext } from '../types/grammy.types';
 import { matchFilter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
 import getUserFours from '../helpers/getUserFours';
+import muteMember from '../helpers/muteMember';
 
 if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
 const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
@@ -46,6 +47,10 @@ async function shoot(ctx: MyGroupTextContext) {
         caption: ctx.t('shoot-miss', { 'shoots-left': shoots_left }),
       });
       break;
+  }
+
+  if (shoots_left < 1) {
+    muteMember(ctx);
   }
 }
 

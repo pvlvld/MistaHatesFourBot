@@ -46,7 +46,7 @@ bot.use(menu_settings_chats);
 bot.drop(matchFilter('channel_post'));
 
 // Global commands
-bot.command('settings', async (ctx) => await settings_cmd(ctx));
+bot.command('settings', (ctx) => settings_cmd(ctx));
 
 // Separate bot by chat type
 const pm = bot.chatType('private');

@@ -60,7 +60,7 @@ async function shoot(ctx: MyGroupTextContext) {
   }
 
   if (shoots_left <= 0) {
-    muteMember(ctx);
+    await muteMember(ctx);
   }
 }
 

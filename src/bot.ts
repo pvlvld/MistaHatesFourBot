@@ -3,7 +3,7 @@ import autoRetryTransformer from './transformers/auto-retry.transformer';
 import { MyContext } from './types/grammy.types';
 import shootHandler from './handlers/shoot.handler';
 import i18n from './utils/i18n';
-import addFullNameField from './middlewares/addFullNameField';
+import addFullNameField from './middlewares/addFullNameField.middleware';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });

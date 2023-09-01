@@ -3,6 +3,9 @@ import { matchFilter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
 import getUserFours from '../helpers/getUserFours';
 import muteMember from '../helpers/muteMember';
+import { upsertUser } from '../db/users.db';
+import { userStats } from '../cache/cache';
+import numberRangeLimiter from '../utils/numberRangeLimiter';
 
 if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
 const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
@@ -29,12 +32,19 @@ function shootHandler(ctx: MyGroupTextContext) {
 
 async function shoot(ctx: MyGroupTextContext) {
   const isShootSuccess = Boolean(getRandomInRange(0, 1));
-  const shoots_left =
-    HITS_TO_MUTE -
-    (await getUserFours(BigInt(ctx.from.id), BigInt(ctx.chat.id)));
+
+  let user_fours = await getUserFours(BigInt(ctx.from.id), BigInt(ctx.chat.id));
+
+  if (user_fours === HITS_TO_MUTE) {
+    updateUserFoursCount(ctx, 0);
+    user_fours = 0;
+  }
+
+  let shoots_left = HITS_TO_MUTE - user_fours;
 
   switch (isShootSuccess) {
     case true:
+      shoots_left = HITS_TO_MUTE - updateUserFoursCount(ctx, user_fours);
       ctx.replyWithPhoto(SHOOT_IMAGE, {
         caption: ctx.t('shoot-hit', {
           'shoots-left': shoots_left,
@@ -49,9 +59,18 @@ async function shoot(ctx: MyGroupTextContext) {
       break;
   }
 
-  if (shoots_left < 1) {
+  if (shoots_left <= 0) {
     muteMember(ctx);
   }
+}
+
+function updateUserFoursCount(ctx: MyGroupTextContext, fours: number) {
+  const updates_fours = numberRangeLimiter(fours + 1, 0, 4);
+
+  userStats.set(BigInt(ctx.from.id), BigInt(ctx.chat.id), updates_fours);
+  upsertUser(ctx, updates_fours);
+
+  return updates_fours;
 }
 
 export default shootHandler;

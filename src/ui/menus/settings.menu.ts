@@ -1,11 +1,11 @@
 import { Menu, MenuRange } from '@grammyjs/menu';
 import { MyContext } from '../../types/grammy.types';
-import { getAdminChats } from '../../db/admins.db';
+import { getAdminChatsWithPerm } from '../../db/admins.db';
 import { getChatSettings, setChatSettings } from '../../helpers/chatSettings';
 
 export const menu_settings_chats = new Menu<MyContext>('settings-chats')
   .dynamic(async (ctx) => {
-    const chats = await getAdminChats(BigInt(ctx.from?.id || -1));
+    const chats = await getAdminChatsWithPerm(BigInt(ctx.from?.id || -1));
     const range = new MenuRange<MyContext>();
 
     if (Object.keys(chats).length === 0) {

@@ -2,6 +2,7 @@ import { Chat, Prisma } from '@prisma/client';
 import prisma from './prismaClient.db';
 import { AdminInputWithPerm } from '../types/prisma.types';
 import { ChatSettings } from '../types/grammy.types';
+import AdminsTransformer from '../helpers/AdminsTransformer';
 
 export const upsertChatWithAdmins = async (
   chat: Chat,
@@ -94,17 +95,12 @@ export const get = async (id: bigint) => {
 };
 
 export async function getChatAdmins(chat_id: bigint) {
-  return (
+  return AdminsTransformer.DBtoUsable(
     await prisma.adminToChat.findMany({
       where: { chatId: chat_id },
       select: { admin: true, has_del_perm: true },
     })
-  ).map((admin) => ({
-    id: admin.admin.id,
-    name: admin.admin.name,
-    username: admin.admin.username,
-    has_del_perm: admin.has_del_perm,
-  }));
+  );
 }
 
 export async function getChatSettings(chat_id: bigint) {

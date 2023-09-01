@@ -3,25 +3,29 @@ import { MyContext } from '../../types/grammy.types';
 import { getAdminChatsWithPerm } from '../../db/admins.db';
 import { getChatSettings, setChatSettings } from '../../helpers/chatSettings';
 
-export const menu_settings_chats = new Menu<MyContext>('settings-chats')
-  .dynamic(async (ctx) => {
-    const chats = await getAdminChatsWithPerm(BigInt(ctx.from?.id || -1));
-    const range = new MenuRange<MyContext>();
+export const menu_settings_chats = new Menu<MyContext>(
+  'settings-chats'
+).dynamic(async (ctx) => {
+  const chats = await getAdminChatsWithPerm(BigInt(ctx.from?.id || -1));
+  const range = new MenuRange<MyContext>();
 
-    if (Object.keys(chats).length === 0) {
-      return range.text('Чатів не знайдено').row();
-    }
+  if (Object.keys(chats).length === 0) {
+    return range.text(ctx.t('chats-not-found')).row();
+  }
 
-    for (const chat of chats) {
-      range
-        .submenu(chat.name, 'settings-list', () =>
-          ctx.editMessageText(`Налаштування: "${chat.name}"\nid: ${chat.id}`)
+  for (const chat of chats) {
+    range
+      .submenu(chat.name, 'settings-list', () =>
+        ctx.editMessageText(
+          `${ctx.t('settings')}: "${chat.name}"\nid: ${chat.id}`
         )
-        .row();
-    }
-    return range;
-  })
-  .url('Додати бота в чат', 't.me/MistaHater4bot?startgroup');
+      )
+      .row();
+  }
+  range.url(ctx.t('add-to-chat'), 't.me/MistaHater4bot?startgroup');
+
+  return range;
+});
 
 const settings_list = new Menu<MyContext>('settings-list').dynamic(
   async (ctx) => {
@@ -93,7 +97,7 @@ const settings_vote = new Menu<MyContext>('settings-vote', {
     )
     .row()
     .text(`${chat_settings.vote_percent}%`, async (ctx) => {
-      await ctx.reply(`Надішліть бажаний відсоток.\nid: ${chat_id}`, {
+      await ctx.reply(`${ctx.t('ask-persent')}\nid: ${chat_id}`, {
         reply_markup: { force_reply: true },
         parse_mode: 'Markdown',
       });

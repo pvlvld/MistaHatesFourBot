@@ -23,19 +23,17 @@ bot.catch((err) => {
   }
 });
 
-bot
-  .start({
-    drop_pending_updates: true,
-    allowed_updates: [
-      'message',
-      'chat_member',
-      'edited_message',
-      'callback_query',
-    ],
-  })
-  .then(() => {
-    console.log('Bot is started.');
-  });
+bot.start({
+  drop_pending_updates: true,
+  allowed_updates: [
+    'message',
+    'chat_member',
+    'edited_message',
+    'callback_query',
+  ],
+});
+
+console.log('Bot is started.');
 
 process.on('SIGINT', async () => await shutdown());
 process.on('SIGTERM', async () => await shutdown());

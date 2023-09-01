@@ -9,4 +9,20 @@ async function isFromAdmin(ctx: MyGroupTextContext) {
   );
 }
 
+export async function isFromAdminWithDelPerm(ctx: MyGroupTextContext) {
+  const admins = await getChatAdmins(ctx);
+
+  for (let admin of admins) {
+    if (admin.id === BigInt(ctx.from.id)) {
+      if (admin.has_del_perm) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  return false;
+}
+
 export default isFromAdmin;

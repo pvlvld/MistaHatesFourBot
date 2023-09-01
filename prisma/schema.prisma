@@ -19,7 +19,9 @@ model Chat {
 }
 
 model User {
-  id       BigInt  @id @unique
+  @@id([user_id, chat_id])
+  user_id       BigInt
+  chat_id       BigInt
   name     String
   username String?
   fours    Int     @default(0)

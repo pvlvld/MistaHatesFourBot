@@ -1,5 +1,6 @@
 import BOT_OWNER_IDS from '../consts/botOwners';
 import { WELCOME_IMAGE } from '../consts/media';
+import * as ChatsDB from '../db/chats.db';
 import { MyContext } from '../types/grammy.types';
 import getAdminsString from '../utils/getAdminsString';
 
@@ -23,6 +24,8 @@ function chatLeaveHandler(ctx: MyContext) {
         console.error(e);
       });
   });
+
+  ChatsDB.remove(BigInt(ctx.chat.id));
 }
 
 export default chatLeaveHandler;

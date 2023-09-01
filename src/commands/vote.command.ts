@@ -13,6 +13,8 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
   setTimeout(() => {
     const pool_result = chatPool.get(BigInt(ctx.chat.id));
     ctx.api.deleteMessage(ctx.chat.id, pool_message.message_id);
+    if (!pool_result) return;
+
     ctx.reply(
       `Голосування закінчилось, результати:\nЗа: ${pool_result?.for}\nПроти: ${pool_result?.against}`
     );

@@ -6,6 +6,7 @@ import i18n from './utils/i18n';
 import addFullNameField from './middlewares/addFullNameField.middleware';
 import settings_cmd from './commands/settings.command';
 import { menu_settings_chats } from './ui/menus/settings.menu';
+import { conversations } from '@grammyjs/conversations';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -28,6 +29,8 @@ bot.use(
 );
 
 bot.use(i18n);
+
+bot.use(conversations());
 
 // MIDDLEWARES
 bot.use(addFullNameField);

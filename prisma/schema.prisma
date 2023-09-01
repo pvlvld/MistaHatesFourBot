@@ -35,7 +35,7 @@ model Admin {
 }
 
 model AdminToChat {
-  id           Int     @id @unique @default(autoincrement())
+  @@id([adminId, chatId])
   admin        Admin   @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   adminId      BigInt
   chat         Chat    @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)

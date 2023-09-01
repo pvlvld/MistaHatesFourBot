@@ -8,7 +8,7 @@ import { vote_menu } from '../ui/menus/vote.menu';
 export async function vote_cmd(ctx: MyGroupTextContext) {
   if (chatPool.get(BigInt(ctx.chat.id))) return;
 
-  const pool_message = await ctx.reply('Голосування', {
+  const pool_message = await ctx.reply(ctx.t('vote'), {
     reply_markup: vote_menu,
   });
 

@@ -5,6 +5,7 @@ import { ChatSettings } from '../types/grammy.types';
 import APIChatToDBChatTransformer from './APIChatToDBChatTransformer';
 import * as ChatsDB from '../db/chats.db';
 import AdminsTransformer from './AdminsTransformer';
+import SettingsTransformer from './SettingsTransformer';
 
 export async function getChatSettings(chat_id: bigint): Promise<ChatSettings> {
   const DEFAULT_CHAT_SETTINGS_COPY = {
@@ -20,7 +21,10 @@ export async function getChatSettings(chat_id: bigint): Promise<ChatSettings> {
   }
 
   //BD
-  if (!settings) settings = await ChatsDB.getChatSettings(chat_id);
+  if (!settings)
+    settings = SettingsTransformer.DBtoUsable(
+      await ChatsDB.getChatSettings(chat_id)
+    );
   if (settings) {
     cache.chat.settings.set(chat_id, settings);
     return settings;

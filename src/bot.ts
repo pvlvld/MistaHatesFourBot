@@ -4,6 +4,7 @@ import { MyContext } from './types/grammy.types';
 import shootHandler from './handlers/shoot.handler';
 import i18n from './utils/i18n';
 import addFullNameField from './middlewares/addFullNameField.middleware';
+import settings_cmd from './commands/settings.command';
 import { menu_settings_chats } from './ui/menus/settings.menu';
 
 // import * as dotenv from 'dotenv';
@@ -30,6 +31,9 @@ bot.use(i18n);
 
 // MIDDLEWARES
 bot.use(addFullNameField);
+
+// MENUS
+bot.use(menu_settings_chats);
 
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));

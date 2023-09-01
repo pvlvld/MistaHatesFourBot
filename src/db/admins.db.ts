@@ -25,7 +25,7 @@ export const createAdminWithChat = async (
 export const updateAdminWithChat = async (
   adminWithPerm: AdminInputWithPerm,
   chat: ChatInput,
-  adminToChatId: number
+  admin_id: bigint
 ) => {
   const { has_del_perm } = adminWithPerm;
   const admin = (({ has_del_perm, ...o }) => o)(adminWithPerm);
@@ -37,7 +37,7 @@ export const updateAdminWithChat = async (
         admin: { connectOrCreate: { where: { id: admin.id }, create: admin } },
         chat: { connectOrCreate: { where: { id: chat.id }, create: chat } },
       },
-      where: { id: adminToChatId },
+      where: { adminId_chatId: { adminId: admin_id, chatId: chat.id } },
     });
   } catch (e) {
     console.error(e);
@@ -57,7 +57,7 @@ export const upsertAdminWithChat = async (
     if (!admin_to_chat) {
       await createAdminWithChat(adminWithPerm, chat);
     } else {
-      await updateAdminWithChat(adminWithPerm, chat, admin_to_chat.id);
+      await updateAdminWithChat(adminWithPerm, chat, admin_to_chat.adminId);
     }
   } catch (e) {
     console.error(e);
@@ -65,22 +65,10 @@ export const upsertAdminWithChat = async (
 };
 
 export const getAdminChats = async (admin_id: bigint): Promise<ChatInput[]> => {
-  try {
-    return await prisma.$queryRaw`
-    SELECT
-      "Chat".id,
-      "Chat".name,
-      "Chat".username,
-      "Chat".settings
-    FROM
-      "Chat"
-    JOIN
-      "AdminToChat" ON "Chat".id = "AdminToChat"."groupId"
-    WHERE
-      "AdminToChat"."adminId" = ${admin_id}
-  `;
-  } catch (e) {
-    console.error(e);
-    return [] as ChatInput[];
-  }
+  return (
+    await prisma.adminToChat.findMany({
+      where: { adminId: admin_id },
+      select: { chat: true },
+    })
+  ).map((chat) => chat.chat);
 };

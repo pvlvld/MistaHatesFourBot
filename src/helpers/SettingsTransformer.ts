@@ -2,6 +2,7 @@ type DB_Settings =
   | {
       id: number;
       chatId: bigint;
+      mista_enable: boolean;
       vote_enable: boolean;
       vote_percent: number;
     }

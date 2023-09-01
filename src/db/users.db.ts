@@ -23,16 +23,14 @@ export async function upsertUser(ctx: MyGroupTextContext, fours: number) {
 
   switch (isUserExist) {
     case true:
-      updateUser(ctx, fours);
-      break;
+      return await updateUser(ctx, fours);
 
     case false:
-      createUser(ctx, fours);
-      break;
+      return await createUser(ctx, fours);
   }
 }
 async function createUser(ctx: MyGroupTextContext, fours: number) {
-  prisma.user.create({
+  return prisma.user.create({
     data: {
       userId: ctx.from.id,
       name: ctx.from.full_name,
@@ -57,7 +55,7 @@ async function createUser(ctx: MyGroupTextContext, fours: number) {
 }
 
 function updateUser(ctx: MyGroupTextContext, fours: number) {
-  prisma.user.update({
+  return prisma.user.update({
     where: { userId_chatId: { userId: ctx.from.id, chatId: ctx.chat.id } },
     data: {
       userId: ctx.from.id,

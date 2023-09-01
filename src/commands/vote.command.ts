@@ -1,5 +1,7 @@
 import { chatPool } from '../cache/cache';
 import POOL_TIME from '../consts/poolTime';
+import { getChatSettings } from '../db/chats.db';
+import { setChatSettings } from '../helpers/chatSettings';
 import { MyGroupTextContext } from '../types/grammy.types';
 import { vote_menu } from '../ui/menus/vote.menu';
 
@@ -10,7 +12,7 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
     reply_markup: vote_menu,
   });
 
-  setTimeout(() => {
+  setTimeout(async () => {
     const pool_result = chatPool.get(BigInt(ctx.chat.id));
     ctx.api.deleteMessage(ctx.chat.id, pool_message.message_id);
     if (!pool_result) return;
@@ -18,6 +20,15 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
     ctx.reply(
       `Голосування закінчилось, результати:\nЗа: ${pool_result?.for}\nПроти: ${pool_result?.against}`
     );
+
+    const new_mista_status = pool_result.for > pool_result.against;
+
+    const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
+
+    if (chat_settings && chat_settings.mista_enable === new_mista_status) {
+      chat_settings.mista_enable = new_mista_status;
+      setChatSettings(BigInt(ctx.chat.id), chat_settings);
+    }
   }, POOL_TIME * 1000);
 }
 

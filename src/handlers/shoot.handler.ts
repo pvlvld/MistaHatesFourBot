@@ -9,6 +9,9 @@ const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
 if (!process.env.SHOOT_IMAGE) throw new Error('Shoot image required');
 const SHOOT_IMAGE = process.env.SHOOT_IMAGE;
 
+if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');
+const HITS_TO_MUTE = parseInt(process.env.HITS_TO_MUTE);
+
 function shootHandler(ctx: MyGroupTextContext) {
   let message = '';
 
@@ -25,10 +28,9 @@ function shootHandler(ctx: MyGroupTextContext) {
 
 async function shoot(ctx: MyGroupTextContext) {
   const isShootSuccess = Boolean(getRandomInRange(0, 1));
-  const shoots_left = await getUserFours(
-    BigInt(ctx.from.id),
-    BigInt(ctx.chat.id)
-  );
+  const shoots_left =
+    HITS_TO_MUTE -
+    (await getUserFours(BigInt(ctx.from.id), BigInt(ctx.chat.id)));
 
   switch (isShootSuccess) {
     case true:

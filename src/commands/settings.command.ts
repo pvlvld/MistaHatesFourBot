@@ -7,7 +7,9 @@ export function settings_cmd(ctx: MyContext) {
     return;
   }
   ctx.reply(
-    'Налаштування доступні в [діалозі з ботом.](tg://resolve?domain=MistaHater4bot&start=start)',
+    `${ctx.t(
+      'settings-in-chat'
+    )}(tg://resolve?domain=MistaHater4bot&start=start)`,
     {
       parse_mode: 'Markdown',
     }

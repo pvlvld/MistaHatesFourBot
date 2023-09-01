@@ -13,7 +13,11 @@ async function getChatAdmins(ctx: MyContext) {
   // api
   let api_admins = await ctx.getChatAdministrators().catch((e) => {});
   if (typeof api_admins === 'object') {
-    return new Set(AdminsTransformer.APItoUsable(api_admins));
+    return new Set(
+      AdminsTransformer.APItoUsable(
+        api_admins.filter((admin) => !admin.user.is_bot)
+      )
+    );
   }
   // db
   admins = new Set(await db.getChatAdmins(chat_id));

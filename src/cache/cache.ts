@@ -1,6 +1,8 @@
 import NodeCache from 'node-cache';
 import { ChatSettings } from '../types/grammy.types';
 import { AdminInputWithPerm } from '../types/prisma.types';
+import { Pool } from '../types/other.types';
+import POOL_TIME from '../consts/poolTime';
 
 /**
  * chat_id: chat_title
@@ -85,6 +87,21 @@ const getCacheKey = {
 
   userStats: (user_id: bigint, chat_id: bigint) =>
     `${user_id}_${chat_id}_fours`,
+  pool: (chat_id: bigint) => `${chat_id}_pool`,
+};
+
+export const chatPool = {
+  get: (chat_id: bigint): Pool | undefined => {
+    return Cache.get(getCacheKey.pool(chat_id)) || undefined;
+  },
+
+  set: (chat_id: bigint, pool: Pool) => {
+    return Cache.set(getCacheKey.pool(chat_id), pool, POOL_TIME + 1);
+  },
+
+  del: (chat_id: bigint) => {
+    return Cache.del(getCacheKey.pool(chat_id));
+  },
 };
 
 export default Cache;

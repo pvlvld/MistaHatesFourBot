@@ -1,7 +1,7 @@
-if (!process.env.BOT_OWNERS) throw new Error('Bot owners required');
+if (!process.env.BOT_OWNER_IDS) throw new Error('Bot owners required');
 
-const BOT_OWNERS = process.env.BOT_OWNERS.split(' ').map((admin_id) =>
+const BOT_OWNER_IDS = process.env.BOT_OWNER_IDS.split(' ').map((admin_id) =>
   Number(admin_id)
 );
 
-export default BOT_OWNERS;
+export default BOT_OWNER_IDS;

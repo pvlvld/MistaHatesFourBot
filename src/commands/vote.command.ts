@@ -4,10 +4,13 @@ import { getChatSettings } from '../db/chats.db';
 import { setChatSettings } from '../helpers/chatSettings';
 import { MyGroupTextContext } from '../types/grammy.types';
 import { vote_menu } from '../ui/menus/vote.menu';
+import SettingsTransformer from '../helpers/SettingsTransformer';
 
 export async function vote_cmd(ctx: MyGroupTextContext) {
   if (chatPool.get(BigInt(ctx.chat.id))) return;
-  const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
+  const chat_settings = SettingsTransformer.DBtoUsable(
+    await getChatSettings(BigInt(ctx.chat.id))
+  );
 
   if (!chat_settings?.vote_enable) return;
 

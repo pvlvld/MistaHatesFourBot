@@ -7,6 +7,9 @@ import { vote_menu } from '../ui/menus/vote.menu';
 
 export async function vote_cmd(ctx: MyGroupTextContext) {
   if (chatPool.get(BigInt(ctx.chat.id))) return;
+  const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
+
+  if (!chat_settings?.vote_enable) return;
 
   const pool_message = await ctx.reply(ctx.t('vote'), {
     reply_markup: vote_menu,
@@ -22,8 +25,6 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
     );
 
     const new_mista_status = pool_result.for > pool_result.against;
-
-    const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
 
     if (chat_settings && chat_settings.mista_enable === new_mista_status) {
       chat_settings.mista_enable = new_mista_status;

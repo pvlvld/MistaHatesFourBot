@@ -21,3 +21,16 @@ export const menu_settings_chats = new Menu<MyContext>('settings-chats')
     return range;
   })
   .url('Додати бота в чат', 't.me/MistaHater4bot?startgroup');
+
+const settings_list = new Menu<MyContext>('settings-list').dynamic(
+  async (ctx) => {
+    const range = new MenuRange<MyContext>();
+
+    range
+      .submenu(`${ctx.t('vote')}`, 'settings-vote')
+      .row()
+      .back(ctx.t('chat-list'));
+
+    return range;
+  }
+);

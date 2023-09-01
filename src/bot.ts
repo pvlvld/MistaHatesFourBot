@@ -8,6 +8,7 @@ import settings_cmd from './commands/settings.command';
 import { menu_settings_chats } from './ui/menus/settings.menu';
 import votePersentConversation from './ui/conversations/votePersent.conversation';
 import { conversations, createConversation } from '@grammyjs/conversations';
+import vote_cmd from './commands/vote.command';
 import { vote_menu } from './ui/menus/vote.menu';
 
 // import * as dotenv from 'dotenv';
@@ -53,6 +54,9 @@ bot.command('settings', (ctx) => settings_cmd(ctx));
 // Separate bot by chat type
 const pm = bot.chatType('private');
 const gm = bot.chatType(['group', 'supergroup']);
+
+// Chat commands
+gm.command('vote', (ctx) => vote_cmd(ctx));
 
 // Handlers
 gm.on('message', async (ctx) => {

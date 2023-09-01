@@ -1,9 +1,10 @@
 import * as Cache from '../cache/cache';
-import { MyGroupTextContext } from '../types/grammy.types';
+import { MyContext } from '../types/grammy.types';
 import * as db from '../db/chats.db';
 import AdminsTransformer from './AdminsTransformer';
 
-async function getChatAdmins(ctx: MyGroupTextContext) {
+async function getChatAdmins(ctx: MyContext) {
+  if (!ctx.chat) return;
   const chat_id = BigInt(ctx.chat.id);
 
   // cache

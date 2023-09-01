@@ -64,20 +64,6 @@ export const upsertAdminWithChat = async (
   }
 };
 
-async function getChatAdmins(chat_id: bigint) {
-  return (
-    await prisma.adminToChat.findMany({
-      where: { chatId: chat_id },
-      select: { admin: true, has_del_perm: true },
-    })
-  ).map((admin) => ({
-    id: admin.admin.id,
-    name: admin.admin.name,
-    username: admin.admin.username,
-    has_del_perm: admin.has_del_perm,
-  }));
-}
-
 export const getAdminChats = async (admin_id: bigint): Promise<ChatInput[]> => {
   try {
     return await prisma.$queryRaw`

@@ -4,6 +4,7 @@ import { MyContext } from './types/grammy.types';
 import shootHandler from './handlers/shoot.handler';
 import i18n from './utils/i18n';
 import addFullNameField from './middlewares/addFullNameField.middleware';
+import { menu_settings_chats } from './ui/menus/settings.menu';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -32,6 +33,9 @@ bot.use(addFullNameField);
 
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));
+
+// Global commands
+bot.command('settings', async (ctx) => await settings_cmd(ctx));
 
 // Separate bot by chat type
 const pm = bot.chatType('private');

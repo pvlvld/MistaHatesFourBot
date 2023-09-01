@@ -3,6 +3,7 @@ import getChatAdmins from './getChatAdmins';
 
 async function isFromAdmin(ctx: MyGroupTextContext) {
   const admins = await getChatAdmins(ctx);
+  if (!admins) return false;
 
   return (
     [...admins].findIndex((admin) => admin.id === BigInt(ctx.from.id)) !== -1
@@ -11,6 +12,7 @@ async function isFromAdmin(ctx: MyGroupTextContext) {
 
 export async function isFromAdminWithDelPerm(ctx: MyGroupTextContext) {
   const admins = await getChatAdmins(ctx);
+  if (!admins) return false;
 
   for (let admin of admins) {
     if (admin.id === BigInt(ctx.from.id)) {

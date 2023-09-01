@@ -8,6 +8,7 @@ import settings_cmd from './commands/settings.command';
 import { menu_settings_chats } from './ui/menus/settings.menu';
 import votePersentConversation from './ui/conversations/votePersent.conversation';
 import { conversations, createConversation } from '@grammyjs/conversations';
+import { vote_menu } from './ui/menus/vote.menu';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -41,6 +42,7 @@ bot.use(createConversation(votePersentConversation));
 
 // MENUS
 bot.use(menu_settings_chats);
+bot.use(vote_menu);
 
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));

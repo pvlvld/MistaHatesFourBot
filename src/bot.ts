@@ -33,7 +33,6 @@ const pm = bot.chatType('private');
 const gm = bot.chatType(['group', 'supergroup']);
 
 // Handlers
-gm.on(':photo', (ctx) => console.log(ctx.msg));
 gm.on('message', async (ctx) => {
   if (matchFilter(':text')(ctx)) {
     shootHandler(ctx);

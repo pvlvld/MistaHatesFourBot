@@ -4,8 +4,8 @@ import { MyContext } from './types/grammy.types';
 import shootHandler from './handlers/shoot.handler';
 import i18n from './utils/i18n';
 
-import * as dotenv from 'dotenv';
-dotenv.config({ path: `./.env` });
+// import * as dotenv from 'dotenv';
+// dotenv.config({ path: `./.env` });
 
 if (!process.env.BOT_TOKEN) throw new Error('Token required');
 

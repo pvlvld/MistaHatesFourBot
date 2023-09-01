@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config({ path: `./.env` });
+
 import { GrammyError, HttpError } from 'grammy';
 import bot from './bot';
 import prisma from './db/prismaClient';

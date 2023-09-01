@@ -3,7 +3,7 @@ dotenv.config({ path: `./.env` });
 
 import { GrammyError, HttpError } from 'grammy';
 import bot from './bot';
-import prisma from './db/prismaClient';
+import prisma from './db/prismaClient.db';
 
 process.on('uncaughtException', function (err) {
   console.error(err);

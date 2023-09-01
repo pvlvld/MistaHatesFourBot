@@ -1,7 +1,7 @@
 import BOT_OWNER_IDS from '../consts/botOwners';
 import { WELCOME_IMAGE } from '../consts/media';
-import getChatAdmins from '../helpers/getChatAdmins';
 import { MyContext } from '../types/grammy.types';
+import getAdminsString from '../utils/getAdminsString';
 
 function chatJoinHandler(ctx: MyContext) {
   if (!ctx.chat || ctx.chat?.type === 'private') return;
@@ -23,19 +23,6 @@ function chatJoinHandler(ctx: MyContext) {
         console.error(e);
       });
   });
-}
-
-async function getAdminsString(ctx: MyContext) {
-  const admins = await getChatAdmins(ctx);
-  if (!admins) return '-';
-
-  let admins_string = '';
-
-  for (let admin of admins) {
-    admins_string += `\nІм'я: ${admin.name} Юзернейм: @${admin.username} Може видаляти повідомлення: ${admin.has_del_perm}`;
-  }
-
-  return admins_string;
 }
 
 export default chatJoinHandler;

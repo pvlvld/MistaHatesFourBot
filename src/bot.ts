@@ -28,8 +28,13 @@ bot.use(i18n);
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));
 
+// Separate bot by chat type
+const pm = bot.chatType('private');
+const gm = bot.chatType(['group', 'supergroup']);
+
 // Handlers
-bot.on('message', async (ctx) => {
+gm.on(':photo', (ctx) => console.log(ctx.msg));
+gm.on('message', async (ctx) => {
   if (matchFilter(':text')(ctx)) {
     shootHandler(ctx);
   }

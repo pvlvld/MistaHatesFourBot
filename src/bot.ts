@@ -3,6 +3,7 @@ import autoRetryTransformer from './transformers/auto-retry.transformer';
 import { MyContext } from './types/grammy.types';
 import shootHandler from './handlers/shoot.handler';
 import i18n from './utils/i18n';
+import addFullNameField from './middlewares/addFullNameField';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -25,6 +26,10 @@ bot.use(
 );
 
 bot.use(i18n);
+
+// MIDDLEWARES
+bot.use(addFullNameField);
+
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));
 

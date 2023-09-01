@@ -72,3 +72,14 @@ export const getAdminChats = async (admin_id: bigint): Promise<ChatInput[]> => {
     })
   ).map((chat) => chat.chat);
 };
+
+export const getAdminChatsWithPerm = async (
+  admin_id: bigint
+): Promise<ChatInput[]> => {
+  return (
+    await prisma.adminToChat.findMany({
+      where: { adminId: admin_id, has_del_perm: true },
+      select: { chat: true },
+    })
+  ).map((chat) => chat.chat);
+};

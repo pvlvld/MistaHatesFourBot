@@ -20,6 +20,7 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
 
   setTimeout(async () => {
     const pool_result = chatPool.get(BigInt(ctx.chat.id));
+    chatPool.del(BigInt(ctx.chat.id));
     ctx.api.deleteMessage(ctx.chat.id, pool_message.message_id);
     if (!pool_result) return;
 

@@ -11,6 +11,7 @@ import { conversations, createConversation } from '@grammyjs/conversations';
 import vote_cmd from './commands/vote.command';
 import { vote_menu } from './ui/menus/vote.menu';
 import chatJoinHandler from './handlers/chatJoin.handler';
+import start_cmd from './commands/start.command';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -55,6 +56,9 @@ bot.command('settings', (ctx) => settings_cmd(ctx));
 // Separate bot by chat type
 const pm = bot.chatType('private');
 const gm = bot.chatType(['group', 'supergroup']);
+
+// Private chat commands
+pm.command('start', (ctx) => start_cmd(ctx));
 
 // Chat commands
 gm.command('vote', (ctx) => vote_cmd(ctx));

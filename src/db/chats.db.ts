@@ -62,7 +62,11 @@ export const update = async (
       data: {
         ...chat,
         settings: {
-          create: settings,
+          upsert: {
+            where: { chatId: chat.id },
+            update: settings,
+            create: settings,
+          },
         },
         admins: {
           connectOrCreate: [...admins].map((admin) => ({

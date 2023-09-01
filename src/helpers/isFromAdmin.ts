@@ -4,8 +4,8 @@ import getChatAdmins from './getChatAdmins';
 async function isFromAdmin(ctx: MyGroupTextContext) {
   const admins = await getChatAdmins(ctx);
 
-  return Boolean(
-    [...admins].findIndex((admin) => admin.id === BigInt(ctx.from.id))
+  return (
+    [...admins].findIndex((admin) => admin.id === BigInt(ctx.from.id)) !== -1
   );
 }
 

@@ -30,7 +30,7 @@ export const create = async (
         },
         admins: {
           connectOrCreate: [...admins].map((admin) => ({
-            where: { id: Number(admin.id) },
+            where: { adminId_chatId: { adminId: admin.id, chatId: chat.id } },
             create: {
               has_del_perm: admin.has_del_perm,
               admin: {
@@ -66,7 +66,7 @@ export const update = async (
         },
         admins: {
           connectOrCreate: [...admins].map((admin) => ({
-            where: { id: Number(admin.id) },
+            where: { adminId_chatId: { adminId: admin.id, chatId: chat.id } },
             create: {
               has_del_perm: admin.has_del_perm,
               admin: {

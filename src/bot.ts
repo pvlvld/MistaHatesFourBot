@@ -10,6 +10,7 @@ import votePersentConversation from './ui/conversations/votePersent.conversation
 import { conversations, createConversation } from '@grammyjs/conversations';
 import vote_cmd from './commands/vote.command';
 import { vote_menu } from './ui/menus/vote.menu';
+import chatJoinHandler from './handlers/chatJoin.handler';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -59,6 +60,8 @@ const gm = bot.chatType(['group', 'supergroup']);
 gm.command('vote', (ctx) => vote_cmd(ctx));
 
 // Handlers
+gm.on(':new_chat_members:me', (ctx) => chatJoinHandler(ctx));
+
 gm.on('message', async (ctx) => {
   if (matchFilter(':text')(ctx)) {
     shootHandler(ctx);

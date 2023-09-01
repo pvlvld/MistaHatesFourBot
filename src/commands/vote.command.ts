@@ -23,13 +23,23 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
     ctx.api.deleteMessage(ctx.chat.id, pool_message.message_id);
     if (!pool_result) return;
 
-    ctx.reply(
-      `Голосування закінчилось, результати:\nЗа: ${pool_result?.for}\nПроти: ${pool_result?.against}`
-    );
-
     const new_mista_status = pool_result.for > pool_result.against;
 
-    if (chat_settings && chat_settings.mista_enable === new_mista_status) {
+    if (chat_settings.mista_enable === new_mista_status) {
+      return;
+    }
+
+    switch (new_mista_status) {
+      case true:
+        ctx.reply(ctx.t('mista-wakeup'));
+        break;
+
+      case false:
+        ctx.reply(ctx.t('mista-sleep'));
+        break;
+    }
+
+    if (chat_settings) {
       chat_settings.mista_enable = new_mista_status;
       setChatSettings(BigInt(ctx.chat.id), chat_settings);
     }

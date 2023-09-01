@@ -47,7 +47,7 @@ model AdminToChat {
 
 model Settings {
   id           Int     @id @default(autoincrement())
-  chat         Chat    @relation(fields: [chatId], references: [id])
+  chat         Chat    @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   chatId       BigInt  @unique
   vote_enable  Boolean
   vote_percent Int

@@ -4,8 +4,10 @@ import getRandomInRange from '../utils/getRandomInRange';
 import { userStats } from '../cache/cache';
 
 if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
-
 const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
+
+if (!process.env.SHOOT_IMAGE) throw new Error('Shoot image required');
+const SHOOT_IMAGE = process.env.SHOOT_IMAGE;
 
 function shootHandler(ctx: MyGroupTextContext) {
   let message = '';
@@ -27,21 +29,17 @@ function shoot(ctx: MyGroupTextContext) {
 
   switch (isShootSuccess) {
     case true:
-      ctx.replyWithPhoto(
-        'AgACAgIAAxkBAAMxZO-OyvxB7f1LkexOugPj4UAxJ6kAAuHLMRtYwoBLOkEdf-uUbk0BAAMCAAN4AAMwBA',
-        {
-          caption: ctx.t('shoot-hit', {
-            'shoots-left': shoots_left,
-          }),
-        }
-      );
+      ctx.replyWithPhoto(SHOOT_IMAGE, {
+        caption: ctx.t('shoot-hit', {
+          'shoots-left': shoots_left,
+        }),
+      });
       break;
 
     case false:
-      ctx.replyWithPhoto(
-        'AgACAgIAAxkBAAMxZO-OyvxB7f1LkexOugPj4UAxJ6kAAuHLMRtYwoBLOkEdf-uUbk0BAAMCAAN4AAMwBA',
-        { caption: ctx.t('shoot-miss', { 'shoots-left': shoots_left }) }
-      );
+      ctx.replyWithPhoto(SHOOT_IMAGE, {
+        caption: ctx.t('shoot-miss', { 'shoots-left': shoots_left }),
+      });
       break;
   }
 }

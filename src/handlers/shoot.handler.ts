@@ -1,7 +1,7 @@
 import type { MyGroupTextContext } from '../types/grammy.types';
 import { matchFilter } from 'grammy';
 import getRandomInRange from '../utils/getRandomInRange';
-import { userStats } from '../cache/cache';
+import getUserFours from '../helpers/getUserFours';
 
 if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
 const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
@@ -23,9 +23,12 @@ function shootHandler(ctx: MyGroupTextContext) {
   }
 }
 
-function shoot(ctx: MyGroupTextContext) {
+async function shoot(ctx: MyGroupTextContext) {
   const isShootSuccess = Boolean(getRandomInRange(0, 1));
-  const shoots_left = userStats.get(BigInt(ctx.from.id), BigInt(ctx.chat.id));
+  const shoots_left = await getUserFours(
+    BigInt(ctx.from.id),
+    BigInt(ctx.chat.id)
+  );
 
   switch (isShootSuccess) {
     case true:

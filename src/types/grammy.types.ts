@@ -34,6 +34,8 @@ export type MyContext = Context &
     get from(): MyUser | undefined;
   };
 
+export type MyNotPrivateChat = Exclude<MyChat, Chat.PrivateChat>;
+
 export type MyGroupTextContext = ChatTypeContext<
   Filter<MyContext, ':text'> | Filter<MyContext, ':caption'>,
   'group' | 'supergroup'

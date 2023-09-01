@@ -53,3 +53,5 @@ status = Статус
 chats-not-found = Чатів не знайдено
 
 add-to-chat = Додати мене в чат
+
+ask-persent = Надішліть бажаний відсоток.

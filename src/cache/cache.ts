@@ -31,11 +31,11 @@ export const admins = {
 // Chat
 export const chat = {
   settings: {
-    set: (chat_id: bigint, settings: Partial<ChatSettings> | 'default') => {
+    set: (chat_id: bigint, settings: Partial<ChatSettings>) => {
       return Cache.set(getCacheKey.settings(chat_id), settings, 0);
     },
 
-    get: (chat_id: bigint): Partial<ChatSettings> | 'default' | undefined => {
+    get: (chat_id: bigint): Partial<ChatSettings> | undefined => {
       return Cache.get(getCacheKey.settings(chat_id));
     },
   },

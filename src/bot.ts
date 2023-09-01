@@ -12,6 +12,7 @@ import vote_cmd from './commands/vote.command';
 import { vote_menu } from './ui/menus/vote.menu';
 import chatJoinHandler from './handlers/chatJoin.handler';
 import start_cmd from './commands/start.command';
+import chatLeaveHandler from './handlers/chatLeave.handler';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -65,6 +66,7 @@ gm.command('vote', (ctx) => vote_cmd(ctx));
 
 // Handlers
 gm.on(':new_chat_members:me', (ctx) => chatJoinHandler(ctx));
+gm.on(':left_chat_member:me', (ctx) => chatLeaveHandler(ctx));
 
 gm.on('message', async (ctx) => {
   if (matchFilter(':text')(ctx)) {

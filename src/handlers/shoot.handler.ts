@@ -27,6 +27,10 @@ const restricted_four = [
   'čtyři',
   'quattro',
   'квадро',
+  'cztery',
+  'чoтири', // en o
+  'чотиpи', // en p
+  'чoтиpи', // en o + p
 ];
 
 if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');

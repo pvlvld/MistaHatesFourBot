@@ -7,6 +7,7 @@ import { upsertUser } from '../db/users.db';
 import { userStats } from '../cache/cache';
 import numberRangeLimiter from '../utils/numberRangeLimiter';
 import { SHOOT_IMAGE } from '../consts/media';
+import { getChatSettings } from '../helpers/chatSettings';
 
 if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
 const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
@@ -14,8 +15,12 @@ const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
 if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');
 const HITS_TO_MUTE = parseInt(process.env.HITS_TO_MUTE);
 
-function shootHandler(ctx: MyGroupTextContext) {
+async function shootHandler(ctx: MyGroupTextContext) {
   let message = '';
+
+  const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
+
+  if (!chat_settings.mista_enable) return;
 
   if (matchFilter(':text')(ctx)) message = ctx.msg.text;
   if (matchFilter(':caption')(ctx)) message = ctx.msg.caption;

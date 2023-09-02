@@ -12,7 +12,9 @@ export async function vote_cmd(ctx: MyGroupTextContext) {
     await getChatSettings(BigInt(ctx.chat.id))
   );
 
-  if (!chat_settings?.vote_enable) return;
+  if (!(await isFromAdminWithDelPerm(ctx))) {
+    if (!chat_settings?.vote_enable) return;
+  }
 
   const pool_message = await ctx.reply(ctx.t('vote'), {
     reply_markup: vote_menu,

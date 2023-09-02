@@ -6,14 +6,9 @@ export function settings_cmd(ctx: MyContext) {
     ctx.reply('🕺🏻', { reply_markup: menu_settings_chats });
     return;
   }
-  ctx.reply(
-    `${ctx.t(
-      'settings-in-chat'
-    )}(tg://resolve?domain=MistaHater4bot&start=start)`,
-    {
-      parse_mode: 'Markdown',
-    }
-  );
+  ctx.reply(ctx.t('settings-in-chat'), {
+    parse_mode: 'Markdown',
+  });
 }
 
 export default settings_cmd;

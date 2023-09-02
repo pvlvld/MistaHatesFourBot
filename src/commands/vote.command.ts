@@ -5,12 +5,14 @@ import { setChatSettings } from '../helpers/chatSettings';
 import { MyGroupTextContext } from '../types/grammy.types';
 import { vote_menu } from '../ui/menus/vote.menu';
 import SettingsTransformer from '../helpers/SettingsTransformer';
+import { isFromAdminWithDelPerm } from '../helpers/isFromAdmin';
+import DEFAULT_SETTINGS from '../consts/defaultSettings';
 
 export async function vote_cmd(ctx: MyGroupTextContext) {
   if (chatPool.get(BigInt(ctx.chat.id))) return;
-  const chat_settings = SettingsTransformer.DBtoUsable(
+  let chat_settings = SettingsTransformer.DBtoUsable(
     await getChatSettings(BigInt(ctx.chat.id))
-  );
+  ) || { ...DEFAULT_SETTINGS };
 
   if (!(await isFromAdminWithDelPerm(ctx))) {
     if (!chat_settings?.vote_enable) return;

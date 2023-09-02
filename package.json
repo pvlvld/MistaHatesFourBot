@@ -5,7 +5,9 @@
   "main": "main.ts",
   "scripts": {
     "dev": "DEV=true npx nodemon src/main.ts",
-    "build": "npx tsc",
+    "p-gen": "npx prisma generate",
+    "p-migrate": "npx prisma migrate deploy",
+    "build": "npm i && npm run p-gen && npm run p-migrate && npx tsc",
     "start": "node build/main.js"
   },
   "author": "",

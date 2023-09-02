@@ -1,7 +1,10 @@
 import { getChatSettings, setChatSettings } from '../helpers/chatSettings';
-import { MyContext, MyGroupTextContext } from '../types/grammy.types';
+import { isFromAdminWithDelPerm } from '../helpers/isFromAdmin';
+import { MyGroupTextContext } from '../types/grammy.types';
 
 async function sleep_cmd(ctx: MyGroupTextContext) {
+  if (!(await isFromAdminWithDelPerm(ctx))) return;
+
   const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
   chat_settings.mista_enable = !chat_settings.mista_enable;
 

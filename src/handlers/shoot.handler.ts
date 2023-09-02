@@ -9,8 +9,19 @@ import numberRangeLimiter from '../utils/numberRangeLimiter';
 import { SHOOT_IMAGE } from '../consts/media';
 import { getChatSettings } from '../helpers/chatSettings';
 
-if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
-const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
+// if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
+// const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
+const restricted_four = [
+  'чотир',
+  'four',
+  'vier',
+  'quatr',
+  'четыр',
+  '4',
+  'xjnbhb',
+  '⁴',
+  'четверт',
+];
 
 if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');
 const HITS_TO_MUTE = parseInt(process.env.HITS_TO_MUTE);

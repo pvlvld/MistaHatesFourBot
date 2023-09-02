@@ -31,6 +31,8 @@ const restricted_four = [
   'чoтири', // en o
   'чотиpи', // en p
   'чoтиpи', // en o + p
+  '1+1+1+1=',
+  '1 + 1 + 1 + 1 =',
 ];
 
 if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');

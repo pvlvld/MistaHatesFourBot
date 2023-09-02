@@ -1,5 +1,5 @@
 const DEFAULT_SETTINGS = {
-  mista_enable: false,
+  mista_enable: true,
   vote_enable: false,
   vote_percent: 50,
 };

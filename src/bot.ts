@@ -13,6 +13,7 @@ import { vote_menu } from './ui/menus/vote.menu';
 import chatJoinHandler from './handlers/chatJoin.handler';
 import start_cmd from './commands/start.command';
 import chatLeaveHandler from './handlers/chatLeave.handler';
+import sleep_cmd from './commands/sleep.commands';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -63,6 +64,7 @@ pm.command('start', (ctx) => start_cmd(ctx));
 
 // Chat commands
 gm.command('vote', (ctx) => vote_cmd(ctx));
+gm.command('sleep', (ctx) => sleep_cmd(ctx));
 
 // Handlers
 gm.on(':new_chat_members:me', (ctx) => chatJoinHandler(ctx));

@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "dev": "DEV=true npx nodemon src/main.ts"
+    "dev": "DEV=true npx nodemon src/main.ts",
+    "build": "npx tsc",
+    "start": "node build/main.js"
   },
   "author": "",
   "license": "ISC",

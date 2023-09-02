@@ -52,12 +52,14 @@ async function shoot(ctx: MyGroupTextContext) {
         caption: ctx.t('shoot-hit', {
           'shoots-left': shoots_left,
         }),
+        reply_to_message_id: ctx.msg.message_id,
       });
       break;
 
     case false:
       ctx.replyWithPhoto(SHOOT_IMAGE, {
         caption: ctx.t('shoot-miss', { 'shoots-left': shoots_left }),
+        reply_to_message_id: ctx.msg.message_id,
       });
       break;
   }

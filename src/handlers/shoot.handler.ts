@@ -21,6 +21,9 @@ const restricted_four = [
   'xjnbhb',
   '⁴',
   'четверт',
+  'ч о т и р и',
+  'f o u r',
+  'ириточ',
 ];
 
 if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');

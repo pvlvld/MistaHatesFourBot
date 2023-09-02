@@ -33,8 +33,8 @@ async function shootHandler(ctx: MyGroupTextContext) {
 
   if (!chat_settings.mista_enable) return;
 
-  if (matchFilter(':text')(ctx)) message = ctx.msg.text;
-  if (matchFilter(':caption')(ctx)) message = ctx.msg.caption;
+  if (matchFilter(':text')(ctx)) message = ctx.msg.text.toLowerCase();
+  if (matchFilter(':caption')(ctx)) message = ctx.msg.caption.toLowerCase();
 
   for (let restricted of restricted_four) {
     if (message.includes(restricted)) {

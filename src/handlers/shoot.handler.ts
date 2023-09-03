@@ -40,14 +40,11 @@ if (!process.env.HITS_TO_MUTE) throw new Error('Hits to mute required');
 const HITS_TO_MUTE = parseInt(process.env.HITS_TO_MUTE);
 
 async function shootHandler(ctx: MyGroupTextContext) {
-  let message = '';
-
   const chat_settings = await getChatSettings(BigInt(ctx.chat.id));
 
   if (!chat_settings.mista_enable) return;
 
-  if (matchFilter(':text')(ctx)) message = ctx.msg.text.toLowerCase();
-  if (matchFilter(':caption')(ctx)) message = ctx.msg.caption.toLowerCase();
+  const message = getMessageText(ctx);
 
   for (let restricted of restricted_four) {
     if (message.includes(restricted)) {
@@ -100,6 +97,17 @@ function updateUserFoursCount(ctx: MyGroupTextContext, fours: number) {
   upsertUser(ctx, updates_fours);
 
   return updates_fours;
+}
+
+function getMessageText(ctx: MyGroupTextContext): string {
+  let message_text = '';
+
+  if (matchFilter(':text')(ctx)) message_text = ctx.msg.text;
+  if (matchFilter(':caption')(ctx)) message_text = ctx.msg.caption;
+
+  message_text = message_text.toLowerCase();
+
+  return message_text;
 }
 
 export default shootHandler;

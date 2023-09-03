@@ -8,6 +8,7 @@ import { userStats } from '../cache/cache';
 import numberRangeLimiter from '../utils/numberRangeLimiter';
 import { SHOOT_IMAGE } from '../consts/media';
 import { getChatSettings } from '../helpers/chatSettings';
+import breakNewLineToSpaces from '../utils/breakLineToSpaces';
 
 // if (!process.env.RESTRICTED_FOUR) throw new Error('Restricted four required');
 // const restricted_four = process.env.RESTRICTED_FOUR.split(' ');
@@ -105,7 +106,7 @@ function getMessageText(ctx: MyGroupTextContext): string {
   if (matchFilter(':text')(ctx)) message_text = ctx.msg.text;
   if (matchFilter(':caption')(ctx)) message_text = ctx.msg.caption;
 
-  message_text = message_text.toLowerCase();
+  message_text = breakNewLineToSpaces(message_text).toLowerCase();
 
   return message_text;
 }

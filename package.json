@@ -8,7 +8,7 @@
     "p-gen": "npx prisma generate",
     "p-migrate": "npx prisma migrate deploy",
     "build": "npm i && npm run p-gen && npm run p-migrate",
-    "start": "node build/main.js"
+    "start": "npx forever start build/main.js"
   },
   "author": "",
   "license": "ISC",

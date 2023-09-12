@@ -14,6 +14,7 @@ import chatJoinHandler from './handlers/chatJoin.handler';
 import start_cmd from './commands/start.command';
 import chatLeaveHandler from './handlers/chatLeave.handler';
 import sleep_cmd from './commands/sleep.commands';
+import { start_menu } from './ui/menus/start.menu';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -48,6 +49,7 @@ bot.use(createConversation(votePersentConversation));
 // MENUS
 bot.use(menu_settings_chats);
 bot.use(vote_menu);
+bot.use(start_menu);
 
 // Drop channel_post updates
 bot.drop(matchFilter('channel_post'));

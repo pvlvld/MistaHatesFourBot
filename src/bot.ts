@@ -15,6 +15,7 @@ import start_cmd from './commands/start.command';
 import chatLeaveHandler from './handlers/chatLeave.handler';
 import sleep_cmd from './commands/sleep.commands';
 import { start_menu } from './ui/menus/start.menu';
+import autoThread from './middlewares/autoThread';
 
 // import * as dotenv from 'dotenv';
 // dotenv.config({ path: `./.env` });
@@ -42,6 +43,7 @@ bot.use(conversations());
 
 // MIDDLEWARES
 bot.use(addFullNameField);
+bot.use(autoThread());
 
 // CONVERSATIONS
 bot.use(createConversation(votePersentConversation));
